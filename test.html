@@ -6,27 +6,35 @@
 	<script src="mpld3.v0.1.js"></script>
 	<script>
 Date.prototype.addDays = function(days) {
-  var dat = new Date(this.valueOf());
-  dat.setDate(dat.getDate() + days);
-  return dat;
+	var dat = new Date(this.valueOf());
+	dat.setDate(dat.getDate() + days);
+	return dat;
 }
-		function inzent_cgi(start) {
+		var store = [];
+		function inzent_cgi(start, n) {
+			if(n>100) return;
 			var end = start.addDays(30);
 			var next = start.addDays(1);
 			var jv = {
 				sy : start.getFullYear(), sm : start.getMonth()+1, sd : start.getDate(), 
 				ey : end.getFullYear(), em : end.getMonth()+1, ed : end.getDate(), fn : ''
 			};
-			setTimeout(function() {
 				$.post('inzent.cgi', jv, function(data, status) {
-					$('#1').html(data);
+					store[n] = data;
 				})
-			}, 3000);
-			inzent_cgi(next);
+			inzent_cgi(next, n+1);
+		}
+		function update(k) {
+			if(k>100) return;
+			setTimeout(function() {
+				$('#1').html(store[k]);
+				update(k+1);
+			}, 1000);
 		}
 		$(document).ready(function() {
 			var d = new Date(2012, 1, 1);
-			inzent_cgi(d);
+			inzent_cgi(d, 0);
+			update(0);
 		});
 //		$(function() {
 //			var jv1 = {sy : 2017, sm : 9, sd : 0, ey : 2017, em : 9, ed : 0, 
