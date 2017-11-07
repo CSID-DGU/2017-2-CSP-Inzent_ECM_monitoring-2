@@ -6,7 +6,9 @@ cgitb.enable()
 from pandas import read_sql
 from sqlalchemy import create_engine
 from mpld3 import fig_to_html
-conn = create_engine('mysql://shopping_mall:shopping_mall@localhost/shopping_mall?charset=utf8')
+local = 'mysql://shopping_mall:shopping_mall@localhost/shopping_mall?charset=utf8'
+remote = 'mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com/inzent?charset=utf8'
+conn = create_engine(local)
 
 form = cgi.FieldStorage()
 sy = int(form.getvalue('sy'))
