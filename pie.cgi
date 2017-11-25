@@ -34,8 +34,11 @@ ul0=[using1+using2, left1+left2]
 label=['using','left']
 
 if formm=="pie" :
-    a=plt.figure(figsize=(15,5))
-    
+    a=plt.figure()
+
+    fig = gcf()
+    DPI = fig.get_dpi()
+    fig.set_size_inches(2300.0/float(DPI),800.0/float(DPI))    
 
     plt.subplot(132)
     plt.pie(ul1, labels=[str(using1)+'byte', str(left1)+'byte'], autopct='%1.1f%%')
@@ -57,8 +60,13 @@ elif formm=="bar":
     left=[ul0[1], left1, left2]
  
     names = ['total','1st archive','2nd archive']
+    
+    a=plt.figure()
 
-    a=plt.figure(figsize=(15,5))
+    fig = gcf()
+    DPI = fig.get_dpi()
+    fig.set_size_inches(2300.0/float(DPI),800.0/float(DPI))
+    
     plt.barh(r, using, height=0.3)
     plt.barh(rr, left, height=0.3)
 
