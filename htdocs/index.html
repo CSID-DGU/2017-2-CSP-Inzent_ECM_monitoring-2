@@ -35,15 +35,35 @@
           }
        );
 
-       $(document).ready( function() {      
+       $(document).ready( function() {
          var today=new Date();
             var now=today.getFullYear()+"."+(today.getMonth()+1)+"."+today.getDate();
-            var jv = {sy : 2016, sm : 1, sd : 0, ey : 2016, em : 12, ed : 0, fn : ""};
+            var jv = {sy : today.getFullYear(), sm : (today.getMonth()), sd : 0, ey : today.getFullYear(), em : (today.getMonth()+1), ed : 0, fn : ""};
             $.post('/cgi-bin/inzent.cgi', jv, function(data, status) {
                 $('#2').html(data);
             })
           }
        );
+
+       $(document).ready( function() {
+         var today=new Date();
+            var now=today.getFullYear()+"."+(today.getMonth()+1)+"."+today.getDate();
+            var jv = {sy : today.getFullYear(), sm : (today.getMonth()+1), sd : 1, ey : today.getFullYear(), em : (today.getMonth()+1), ed : today.getDate(), fn : ""};
+            $.post('/cgi-bin/inzent.cgi', jv, function(data, status) {
+                $('#3').html(data);
+            })
+          }
+       );
+       $(document).ready( function() {
+         var today=new Date();
+            var now=today.getFullYear()+"."+(today.getMonth()+1)+"."+today.getDate();
+            var jv = {sy : today.getFullYear(), sm : (today.getMonth()+1), sd : today.getDate(), ey : today.getFullYear(), em : (today.getMonth()+1), ed : today.getDate(), fn : ""};
+            $.post('/cgi-bin/inzent.cgi', jv, function(data, status) {
+                $('#4').html(data);
+            })
+          }
+       );
+
       </script>
 
    </head>
@@ -86,14 +106,15 @@
 
       <div class="container" style="width:100%; height:1060px;">
          <div class="span12">
-          <h1 class="text-center">사용량 통계(메인 대쉬보드)</h1>
-          <hr />
+          <!--<h1 class="text-center">사용량 통계(메인 대쉬보드)</h1>
+          <hr />-->
 
 
-            <div class="well well-sm" style="height:900px;">
-              <h5>실시간 사용량 & 금일 사용량</h5>
-              <div id="1" style='width:1150px; height:800px; border:3px solid gold; float:left;'></div>
-              <div id="2" style='width:1150px; height:800px; border:3px solid gold; float:left;'></div>
+            <div class="well well-sm" style="height:1050px;">
+              <div id="1" style='width:1150px; height:500px; border:3px solid gold; float:left;'></div>
+              <div id="2" style='width:1150px; height:500px; border:3px solid gold; float:left;'></div>
+              <div id="3" style='width:1150px; height:500px; border:3px solid gold; float:left;'></div>
+              <div id="4" style='width:1150px; height:500px; border:3px solid gold; float:left;'></div>
             <hr />
             </div>
           </div>
