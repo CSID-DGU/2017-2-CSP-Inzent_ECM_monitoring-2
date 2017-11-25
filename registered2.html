@@ -10,12 +10,27 @@
             $.post('/cgi-bin/pie2.cgi', jv, function(data, status) {
                 $('#1').html(data);
             })
-          }
-       );
+          });
 </script>
 
 </head>
 <body>
-<div id="1"></div>
+<select id="kindd">
+<option value="pie">pie</option>
+<option value="bar">bar</option>
+</select>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#kindd').change(function () {
+            var jv2 = {kind: $(":selected").text()};
+            $.post('/cgi-bin/pie2.cgi', jv2, function(data, status) {
+	$('#1').html(data);
+	})
+        });
+    });
+</script>
+
+<div id="1"></div>
 </body>
 </html>
