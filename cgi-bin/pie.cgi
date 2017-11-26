@@ -15,9 +15,9 @@ sys.setdefaultencoding('utf8')
 cgitb.enable()
 
 form=cgi.FieldStorage()
-formm=form.getvalue('choose')
+formm=form.getvalue('kind')
 
-conn=sql.create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com:3306/inzent')
+conn=sql.create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com:3306/inzent?charset=utf8')
 
 query1=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME where VOLUMEID='1HS_V001'", conn)
 using1=query1.iloc[0][0]
@@ -34,8 +34,11 @@ ul0=[using1+using2, left1+left2]
 label=['using','left']
 
 if formm=="pie" :
-    a=plt.figure(figsize=(15,5))
+
+    a=plt.figure()
     
+    DPI = a.get_dpi()
+    a.set_size_inches(2300.0/float(DPI),800.0/float(DPI))    
 
     plt.subplot(132)
     plt.pie(ul1, labels=[str(using1)+'byte', str(left1)+'byte'], autopct='%1.1f%%')
@@ -50,6 +53,7 @@ if formm=="pie" :
     plt.title('total')
     plt.legend(label, loc="upper left")
 
+
 elif formm=="bar":
     r = [0,1,2]
     rr=[0.4, 1.4, 2.4]
@@ -57,8 +61,12 @@ elif formm=="bar":
     left=[ul0[1], left1, left2]
  
     names = ['total','1st archive','2nd archive']
+    
+    a=plt.figure()
 
-    a=plt.figure(figsize=(15,5))
+    DPI = a.get_dpi()
+    a.set_size_inches(2300.0/float(DPI),800.0/float(DPI))
+    
     plt.barh(r, using, height=0.3)
     plt.barh(rr, left, height=0.3)
 
@@ -73,5 +81,5 @@ elif formm=="bar":
     for i,j in zip(left, rr):
         plt.annotate(str(i),xy=(i,j))
 
-print 'Content-type: text/html\n'
+print 'Content-type: text/html;\n'
 print d3.fig_to_html(a)
