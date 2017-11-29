@@ -1,0 +1,36 @@
+<html>
+<head>
+
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<title>pie and bar</title>
+ <script type="text/javascript">
+       $(document).ready( function() {
+	var jv={kind : "pie"};
+            $.post('/cgi-bin/pie2.cgi', jv, function(data, status) {
+                $('#1').html(data);
+            })
+          });
+</script>
+
+</head>
+<body>
+<select id="kindd">
+<option value="pie">pie</option>
+<option value="bar">bar</option>
+</select>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#kindd').change(function () {
+            var jv2 = {kind: $(":selected").text()};
+            $.post('/cgi-bin/pie2.cgi', jv2, function(data, status) {
+	$('#1').html(data);
+	})
+        });
+    });
+</script>
+
+<div id="1"></div>
+</body>
+</html>
