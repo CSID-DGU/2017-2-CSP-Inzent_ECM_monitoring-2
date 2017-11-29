@@ -19,16 +19,14 @@ formm=form.getvalue('kind')
 
 conn=sql.create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com:3306/inzent')
 
-query1=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME where VOLUMEID='1HS_V001'", conn)
+query1=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME", conn)
 using1=query1.iloc[0][0]
 left1=query1.iloc[0][1]
+using2=query1.iloc[1][0]
+left2=query1.iloc[1][1]
+
 ul1=[using1, left1]
-
-query2=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME where VOLUMEID='2HS_V001'", conn)
-using2=query2.iloc[0][0]
-left2=query2.iloc[0][1]
 ul2=[using2, left2]
-
 ul0=[using1+using2, left1+left2]
 
 label=['using','left']
@@ -52,6 +50,7 @@ if formm=="pie" :
     plt.pie(ul0, labels=[str(ul0[0])+'byte', str(ul0[1])+'byte'], autopct='%1.1f%%')
     plt.title('total')
     plt.legend(label, loc="upper left")
+    plt.style.use('seaborn')
 
 
 elif formm=="bar":
@@ -81,5 +80,7 @@ elif formm=="bar":
     for i,j in zip(left, rr):
         plt.annotate(str(i),xy=(i,j))
 
+
+plt.style.use('seaborn')
 print 'Content-type: text/html;\n'
 print d3.fig_to_html(a)
