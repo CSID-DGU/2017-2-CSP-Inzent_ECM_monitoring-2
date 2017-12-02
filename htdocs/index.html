@@ -21,9 +21,9 @@
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
       <script type="text/javascript">
-       $(document).ready( function() {      
+
+      $(document).ready( function() {      
          var today=new Date();
-          //document.write(today.getFullYear()+"."+(today.getMonth()+1)+"."+today.getDate());
             var now=today.getFullYear()+"."+(today.getMonth()+1)+"."+today.getDate();
             var jv = {
               sy : today.getFullYear()-1, sm : (today.getMonth()+1), sd : 0,
@@ -35,7 +35,7 @@
           }
        );
 
-       $(document).ready( function() {
+      $(document).ready( function() {
          var today=new Date();
             var now=today.getFullYear()+"."+(today.getMonth()+1)+"."+today.getDate();
             var jv = {sy : today.getFullYear(), sm : (today.getMonth()), sd : 0, ey : today.getFullYear(), em : (today.getMonth()+1), ed : 0, fn : ""};
@@ -88,7 +88,7 @@
           <ul class="nav navbar-nav">
             <!--<li><a href="#">index<span class="sr-only"></span></a></li>
             <li><a href="#">세부</a></li>-->
-
+            <li><a href="index.html">HOME</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="false">정보통계시스템<span class="caret"></span></a>
@@ -111,14 +111,14 @@
 
 
             <div class="well well-sm" style="height:1050px;">
-              <div style='width:1150px; border:3px solid gold; float:left; text-align: center'>금일기준1년</div>
-              <div style='width:1150px; border:3px solid gold; float:left; text-align: center'>금월1달</div>
-              <div id="1" style='width:1150px; height:500px; border:3px solid gold; float:left; text-align: center'></div>
-              <div id="2" style='width:1150px; height:500px; border:3px solid gold; float:left; text-align: center'></div>
-              <div style='width:1150px; border:3px solid gold; float:left; text-align: center'>금월31일치</div>
-              <div style='width:1150px; border:3px solid gold; float:left; text-align: center'>금일1일</div>
-              <div id="3" style='width:1150px; height:500px; border:3px solid gold; float:left; text-align: center'></div>
-              <div id="4" style='width:1150px; height:500px; border:3px solid gold; float:left; text-align: center'></div>
+              <div class="col-md-6" style='border:3px solid gold; float:left; text-align: center'>금일기준1년</div>
+              <div class="col-md-6" style='border:3px solid gold; float:left; text-align: center'>금월1달</div>
+              <div class="col-md-6" id="1" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+              <div class="col-md-6" id="2" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+              <div class="col-md-6" style='border:3px solid gold; float:left; text-align: center'>금월31일치</div>
+              <div class="col-md-6" style='border:3px solid gold; float:left; text-align: center'>금일1일</div>
+              <div class="col-md-6" id="3" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+              <div class="col-md-6" id="4" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
             <hr />
             </div>
           </div>
