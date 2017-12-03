@@ -22,12 +22,17 @@ conn=sql.create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeas
 
 query=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME", conn)
 using1=round(query.iloc[0][0]/1073741824,3)
-left1=round(query.iloc[0][1]/1073741824,3)
+remain1=round(query.iloc[0][1]/1073741824,3)
 using2=round(query.iloc[1][0]/1073741824,3)
-left2=round(query.iloc[1][1]/1073741824,3)
+remain2=round(query.iloc[1][1]/1073741824,3)
 
-ul0=[using1+using2, left1+left2]
-label=['using','left']
+ul0=[using1+using2, remain1+remain2]
+label=['using','remain']
+
+#color_vals = [-1, 0, 1]
+#my_norm = mpl.colors.Normalize(-1, 0) # maps your data to the range [0, 1]
+#my_cmap = mpl.cm.get_cmap('Pastel1') # can pick your color map
+#colors=my_cmap(my_norm(color_vals))
 
 a=plt.figure()
 DPI = a.get_dpi()
@@ -38,15 +43,15 @@ mpl.rcParams['font.size']=20
 
 if formm=="pie" :
 
-    ul1=[using1, left1]
-    ul2=[using2, left2]
+    ul1=[using1, remain1]
+    ul2=[using2, remain2]
     
     plt.subplot(132, fc="none")
-    plt.pie(ul1, labels=[str(using1)+'GB', str(left1)+'GB'], autopct='%1.1f%%')
+    plt.pie(ul1, labels=[str(using1)+'GB', str(remain1)+'GB'], autopct='%1.1f%%')
     plt.title('1st archive')
-
+    
     plt.subplot(133, fc="none")
-    plt.pie(ul2, labels=[str(using2)+'GB', str(left2)+'GB'], autopct='%1.1f%%')
+    plt.pie(ul2, labels=[str(using2)+'GB', str(remain2)+'GB'], autopct='%1.1f%%')
     plt.title('2nd archive')
 
     plt.subplot(131, fc="none")
@@ -59,21 +64,22 @@ elif formm=="bar":
     archive=['total archives', '1st archive', '2nd archive']
     ind=[x for x, _ in enumerate(archive)]
     using=np.array([using1+using2, using1, using2])
-    left=np.array([left1+left2, left1, left2])
-    total=using+left
+    remain=np.array([remain1+remain2, remain1, remain2])
+    total=using+remain
     pro_using=np.true_divide(using, total)*100
-    pro_left=np.true_divide(left, total)*100
- 
-    plt.bar(ind, pro_using, width=0.4, bottom=pro_left)
-    plt.bar(ind, pro_left, width=0.4)
+    pro_remain=np.true_divide(remain, total)*100
+    
+    plt.subplot(fc="none")
+    plt.bar(ind, pro_using, width=0.4, bottom=pro_remain)
+    plt.bar(ind, pro_remain, width=0.4)
 
     plt.xticks(ind, archive)
     plt.ylim=1.0
     plt.legend(label, loc="lower left")
 
-    for i,j in zip(ind, left):
-        plt.annotate(str(j)+'GB',xy=(i-0.05,pro_left[i]-5))
-        plt.annotate(format(pro_left[i],'1.1f')+'%',xy=(i-0.025,pro_left[i]-10))
+    for i,j in zip(ind, remain):
+        plt.annotate(str(j)+'GB',xy=(i-0.05,pro_remain[i]-5))
+        plt.annotate(format(pro_remain[i],'1.1f')+'%',xy=(i-0.025,pro_remain[i]-10))
     for i,j in zip(ind, using):
         plt.annotate(str(j)+'GB',xy=(i-0.05,95))
         plt.annotate(format(pro_using[i],'1.1f')+'%',xy=(i-0.025,90))
