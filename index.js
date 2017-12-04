@@ -30,8 +30,8 @@ $(document).ready( function() {
 		$('#5').html(data);
 	});
 	$('#kindd').change(function () {
-		var jv2 = {kind: $("#kindd").value()};
-		$.post('pie.cgi', {kind : 'pie'}, function(data, status) {
+		var jv2 = {kind: $("#kindd").text()};
+		$.post('pie.cgi', jv2, function(data, status) {
 			$('#5').html(data);
 		})
 	});
@@ -43,8 +43,9 @@ $(document).ready( function() {
 			ey : String(end).split(" ")[3],
 			em : String(end).split(" ")[1],
 			ed : String(end).split(" ")[2],
-			file : ""};
+			file : "1.xlsx"};
 		$.post('inzent.cgi', jv2, function(data, status) {
+			data += "<a href='file/1.xlsx'>엑셀 파일 다운로드</a>";
 			$('#6').html(data);
 		})
 	});
@@ -56,8 +57,9 @@ $(document).ready( function() {
 			ey : String(end).split(" ")[3],
 			em : String(end).split(" ")[1],
 			ed : String(end).split(" ")[2],
-			file : ""};
-		$.post('/cgi-bin/inzent.cgi', jv3, function(data, status) {
+			file : "2.xlsx"};
+		$.post('inzent.cgi', jv3, function(data, status) {
+			data += "<a href='file/2.xlsx'>엑셀 파일 다운로드</a>";
 			$('#7').html(data);
 		})
 	});
