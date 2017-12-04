@@ -1,4 +1,4 @@
-#!C:\Python27\python.exe
+#!/usr/bin/python
 #-*- coding: utf-8 -*-
 
 import matplotlib.pyplot as plt

@@ -1,13 +1,14 @@
-#!C:\Python27\python.exe
-#-*- coding: utf-8 -*-
-
+#!/usr/bin/python
+# coding: utf-8
 import matplotlib, cgi, cgitb
 matplotlib.use('Agg')
 cgitb.enable()
 from pandas import read_sql
 from sqlalchemy import create_engine
 from mpld3 import fig_to_html
-conn = create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com/inzent?charset=utf8')
+local = 'mysql://shopping_mall:shopping_mall@localhost/shopping_mall?charset=utf8'
+remote = 'mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com/inzent?charset=utf8'
+conn = create_engine(remote)
 
 form = cgi.FieldStorage()
 sy = int(form.getvalue('sy'))
@@ -42,7 +43,8 @@ df = []
 for i in range(3):
     query = "select sum(FILESIZE) as " + alias[i] + sel_vol + ", date from data where Date(date) >= " + start + " and Date(date) <= " + end + vol[i] + " group by " + groupby + sel_vol
     df.append(read_sql(query, conn))
-
+import matplotlib.pyplot as plt
+plt.style.use('fivethirtyeight')
 if kind == 'bar':
     df[0] = df[0].append({'Total': df[0].loc[0,'Total'] + df[0].loc[1, 'Total'], 'VOLUMEID' : 'Total', 'date' : ''}, ignore_index=True)
     ax = df[0].plot(x='VOLUMEID',y='Total', kind='bar')
