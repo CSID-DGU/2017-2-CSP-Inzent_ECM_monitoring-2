@@ -1,7 +1,9 @@
-#!C:\Python27\python.exe
+#!/usr/bin/python
 #-*- coding: utf-8 -*-
 
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 import pandas as pd
 import cgi
 import cgitb
