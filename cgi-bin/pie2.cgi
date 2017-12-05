@@ -1,10 +1,11 @@
-#!C:\Python27\python.exe
+#!/usr/bin/python
 #-*- coding: utf-8 -*-
 
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import pandas as pd
-import cgi
-import cgitb
+import numpy as np
+import cgi, cgitb
 import mpld3 as d3
 import sqlalchemy as sql
 import sys  
@@ -19,67 +20,71 @@ formm=form.getvalue('kind')
 
 conn=sql.create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com:3306/inzent')
 
-query1=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME where VOLUMEID='1HS_V001'", conn)
-using1=query1.iloc[0][0]
-left1=query1.iloc[0][1]
-ul1=[using1, left1]
+query=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME", conn)
+using1=round(query.iloc[0][0]/1073741824,3)
+remain1=round(query.iloc[0][1]/1073741824,3)
+using2=round(query.iloc[1][0]/1073741824,3)
+remain2=round(query.iloc[1][1]/1073741824,3)
 
-query2=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME where VOLUMEID='2HS_V001'", conn)
-using2=query2.iloc[0][0]
-left2=query2.iloc[0][1]
-ul2=[using2, left2]
+ul0=[using1+using2, remain1+remain2]
+label=['using','remain']
 
-ul0=[using1+using2, left1+left2]
+#color_vals = [-1, 0, 1]
+#my_norm = mpl.colors.Normalize(-1, 0) # maps your data to the range [0, 1]
+#my_cmap = mpl.cm.get_cmap('Pastel1') # can pick your color map
+#colors=my_cmap(my_norm(color_vals))
 
-label=['using','left']
+a=plt.figure()
+DPI = a.get_dpi()
+a.set_size_inches(2300.0/float(DPI),800.0/float(DPI))
+
+#plt.style.use('dark_background') 디자인고민...
+mpl.rcParams['font.size']=20
 
 if formm=="pie" :
 
-    a=plt.figure()
+    ul1=[using1, remain1]
+    ul2=[using2, remain2]
     
-    DPI = a.get_dpi()
-    a.set_size_inches(2300.0/float(DPI),800.0/float(DPI))    
-
-    plt.subplot(132)
-    plt.pie(ul1, labels=[str(using1)+'byte', str(left1)+'byte'], autopct='%1.1f%%')
+    plt.subplot(132, fc="none")
+    plt.pie(ul1, labels=[str(using1)+'GB', str(remain1)+'GB'], autopct='%1.1f%%')
     plt.title('1st archive')
-
-    plt.subplot(133)
-    plt.pie(ul2, labels=[str(using2)+'byte', str(left2)+'byte'], autopct='%1.1f%%')
+    
+    plt.subplot(133, fc="none")
+    plt.pie(ul2, labels=[str(using2)+'GB', str(remain2)+'GB'], autopct='%1.1f%%')
     plt.title('2nd archive')
 
-    plt.subplot(131)
-    plt.pie(ul0, labels=[str(ul0[0])+'byte', str(ul0[1])+'byte'], autopct='%1.1f%%')
-    plt.title('total')
+    plt.subplot(131, fc="none")
+    plt.pie(ul0, labels=[str(ul0[0])+'GB', str(ul0[1])+'GB'], autopct='%1.1f%%')
+    plt.title('total archives')
     plt.legend(label, loc="upper left")
 
 
 elif formm=="bar":
-    r = [0,1,2]
-    rr=[0.4, 1.4, 2.4]
-    using=[ul0[0], using1, using2]
-    left=[ul0[1], left1, left2]
- 
-    names = ['total','1st archive','2nd archive']
+    archive=['total archives', '1st archive', '2nd archive']
+    ind=[x for x, _ in enumerate(archive)]
+    using=np.array([using1+using2, using1, using2])
+    remain=np.array([remain1+remain2, remain1, remain2])
+    total=using+remain
+    pro_using=np.true_divide(using, total)*100
+    pro_remain=np.true_divide(remain, total)*100
     
-    a=plt.figure()
+    plt.subplot(fc="none")
+    plt.bar(ind, pro_using, width=0.4, bottom=pro_remain)
+    plt.bar(ind, pro_remain, width=0.4)
 
-    DPI = a.get_dpi()
-    a.set_size_inches(2300.0/float(DPI),800.0/float(DPI))
-    
-    plt.barh(r, using, height=0.3)
-    plt.barh(rr, left, height=0.3)
+    plt.xticks(ind, archive)
+    plt.ylim=1.0
+    plt.legend(label, loc="lower left")
 
-    plt.yticks([0.2,1.2,2.2], names)
-    plt.xlim(0, sum(ul0))
-    plt.xlabel("(unit: byte)")
-    plt.legend(label, loc="lower right")
-    plt.gca().invert_yaxis()
+    for i,j in zip(ind, remain):
+        plt.annotate(str(j)+'GB',xy=(i-0.05,pro_remain[i]-5))
+        plt.annotate(format(pro_remain[i],'1.1f')+'%',xy=(i-0.025,pro_remain[i]-10))
+    for i,j in zip(ind, using):
+        plt.annotate(str(j)+'GB',xy=(i-0.05,95))
+        plt.annotate(format(pro_using[i],'1.1f')+'%',xy=(i-0.025,90))
 
-    for i,j in zip(using, r):
-        plt.annotate(str(i),xy=(i,j))
-    for i,j in zip(left, rr):
-        plt.annotate(str(i),xy=(i,j))
 
 print 'Content-type: text/html;\n'
 print d3.fig_to_html(a)
+
