@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # coding: utf-8
-import matplotlib, cgi, cgitb
+import matplotlib, cgi, cgitb, os
 matplotlib.use('Agg')
 cgitb.enable()
 from pandas import read_sql
