@@ -1,87 +1,36 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import pandas as pd
-import cgi
-import cgitb
 import mpld3 as d3
 import sqlalchemy as sql
-import sys  
 
-reload(sys)  
-sys.setdefaultencoding('utf8')
+local = 'mysql://shopping_mall:shopping_mall@localhost/shopping_mall?charset=utf8'
+remote = 'mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com/inzent?charset=utf8'
+conn=sql.create_engine(local)
+df = pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME", conn)
 
-cgitb.enable()
+vol1 = [df.iloc[0][0], df.iloc[0][1]]
+vol2 = [df.iloc[1][0], df.iloc[1][1]]
+labels = ['Used', 'Free']
+colors = ['red', 'deepskyblue']
+explode = [0.1, 0]
 
-form=cgi.FieldStorage()
-formm=form.getvalue('choose')
-
-conn=sql.create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com:3306/inzent')
-
-query1=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME where VOLUMEID='1HS_V001'", conn)
-using1=query1.iloc[0][0]
-left1=query1.iloc[0][1]
-ul1=[using1, left1]
-
-query2=pd.read_sql("select MAXSPACE-SPACELEFT, SPACELEFT from ASYSVOLUME where VOLUMEID='2HS_V001'", conn)
-using2=query2.iloc[0][0]
-left2=query2.iloc[0][1]
-ul2=[using2, left2]
-
-ul0=[using1+using2, left1+left2]
-
-label=['using','left']
-
-if formm=="pie" :
-    a=plt.figure()
-
-    fig = gcf()
-    DPI = fig.get_dpi()
-    fig.set_size_inches(2300.0/float(DPI),800.0/float(DPI))    
-
-    plt.subplot(132)
-    plt.pie(ul1, labels=[str(using1)+'byte', str(left1)+'byte'], autopct='%1.1f%%')
-    plt.title('1st archive')
-
-    plt.subplot(133)
-    plt.pie(ul2, labels=[str(using2)+'byte', str(left2)+'byte'], autopct='%1.1f%%')
-    plt.title('2nd archive')
-
-    plt.subplot(131)
-    plt.pie(ul0, labels=[str(ul0[0])+'byte', str(ul0[1])+'byte'], autopct='%1.1f%%')
-    plt.title('total')
-    plt.legend(label, loc="upper left")
-
-elif formm=="bar":
-    r = [0,1,2]
-    rr=[0.4, 1.4, 2.4]
-    using=[ul0[0], using1, using2]
-    left=[ul0[1], left1, left2]
- 
-    names = ['total','1st archive','2nd archive']
-    
-    a=plt.figure()
-
-    fig = gcf()
-    DPI = fig.get_dpi()
-    fig.set_size_inches(2300.0/float(DPI),800.0/float(DPI))
-    
-    plt.barh(r, using, height=0.3)
-    plt.barh(rr, left, height=0.3)
-
-    plt.yticks([0.2,1.2,2.2], names)
-    plt.xlim(0, sum(ul0))
-    plt.xlabel("(unit: byte)")
-    plt.legend(label, loc="lower right")
-    plt.gca().invert_yaxis()
-
-    for i,j in zip(using, r):
-        plt.annotate(str(i),xy=(i,j))
-    for i,j in zip(left, rr):
-        plt.annotate(str(i),xy=(i,j))
-
-print 'Content-type: text/html\n'
-print d3.fig_to_html(a)
+#plt.style.use('bmh')
+plt.subplot('131')
+plt.title('Storage1', fontsize=15)
+plt.pie(vol1, explode = explode,labels = labels, autopct = '%1.1f%%', startangle=-90, colors=colors)
+plt.subplot('132')
+plt.title('Storage2', fontsize=15)
+plt.pie(vol2, explode = explode,labels = labels, autopct = '%1.1f%%', startangle=-90, colors=colors)
+plt.subplot('133')
+plt.title('Total', fontsize=15)
+plt.pie([sum(x) for x in zip(vol1, vol2)], explode = explode,labels = labels, autopct = '%1.1f%%', startangle=-90, colors=colors)
+fig = plt.gcf()
+fig.set_size_inches(12, 4)
+#plt.show()
+print 'Content-type:text/html;\r\n\r\n'
+print d3.fig_to_html(fig)

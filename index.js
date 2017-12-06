@@ -1,7 +1,9 @@
+var gr_cgi = 'cgi-bin/inzent.cgi';
+var free_cgi = 'cgi-bin/pie.cgi';
 function load_cgi(sy_, sm_, sd_, ey_, em_, ed_, file, id) {
 	var jv = {sy : sy_, sm : sm_, sd : sd_, 
 			  ey : ey_, em : em_, ed : ed_, fn : file};
-	$.post('cgi-bin/inzent.cgi', jv, function(data,status) {
+	$.post(gr_cgi, jv, function(data,status) {
 		$(id).html(data);
 	})
 }
@@ -25,13 +27,12 @@ $(document).ready( function() {
 	load_cgi(ey, em, ed, ey, em, ed, '', '#4');//금일
 	load_cgi(ey-2, em, 0, ey-1, em, 0, '', '#6');//사용자 설정
 	load_cgi(ey-1, em, 0, ey, em, 0, '', '#7');
-	var jv={kind : "pie"};
-	$.post('pie.cgi', jv, function(data, status) {
-		$('#5').html(data);
-	});
+	$('#5').load('/tmp/t');// {
+//		$('#5').html(data);
+//	});
 	$('#kindd').change(function () {
 		var jv2 = {kind: $("#kindd").text()};
-		$.post('cgi-bin/pie.cgi', jv2, function(data, status) {
+		$.post(free_cgi,  function(data, status) {
 			$('#5').html(data);
 		})
 	});
@@ -44,7 +45,7 @@ $(document).ready( function() {
 			em : String(end).split(" ")[1],
 			ed : String(end).split(" ")[2],
 			file : "1.xlsx"};
-		$.post('inzent.cgi', jv2, function(data, status) {
+		$.post(gr_cgi, jv2, function(data, status) {
 			data += "<a href='file/1.xlsx'>엑셀 파일 다운로드</a>";
 			$('#6').html(data);
 		})
@@ -58,7 +59,7 @@ $(document).ready( function() {
 			em : String(end).split(" ")[1],
 			ed : String(end).split(" ")[2],
 			file : "2.xlsx"};
-		$.post('inzent.cgi', jv3, function(data, status) {
+		$.post(gr_cgi, jv3, function(data, status) {
 			data += "<a href='file/2.xlsx'>엑셀 파일 다운로드</a>";
 			$('#7').html(data);
 		})
