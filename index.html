@@ -17,7 +17,7 @@
 
 	<body>
 		<style type="text/css">
-.jumbotron {
+#j {
 	background-image: url('image/ECM.jpg');
 	background-size: cover;
 	text-shadow: black 0.2em 0.2em 0.2em;
@@ -45,7 +45,7 @@
 		</nav>
 
 		<div class="container">
-			<div class="jumbotron">
+			<div class="jumbotron" id='j'>
 				<h1 class="text-center">ECM monitoring system</h1>
 				<hr />
 				<h3> INZENT </h3>
@@ -54,6 +54,8 @@
 
 			</div>
 		</div>
+
+		<div class='container'><div class='jumbotron' id='0'></div></div>	
 
 		<div class="container" style="width:100%; height:1060px;">
 			<div class="span12">
@@ -83,10 +85,20 @@
 					<hr class="row">
 					<h2 class="row text-center">저장소 여유 용량</h2>
 					<hr class="row">
-					<div class="row well well-sm" style="height:950px;">
-						<div id="5"></div>
+					<div class="row jumbotron">
+						<div class='col-md-4'>
+							<h4 style='text-align: center'>저장소1</h4>
+							<img width=430 src='file/1.png' align='center'>
+						</div>
+						<div class='col-md-4'>
+							<h4 style='text-align: center'>저장소2</h4>
+							<img width=430 align='center' src='file/2.png'>
+						</div>
+						<div class='col-md-4'>
+							<h4 style='text-align: center'>총합</h4>
+							<img width=430 src='file/3.png' align='center'>
+						</div>
 					</div>
-
 
 					<hr class="row">
 					<h2 class="row text-center">사용자 기간 설정 사용량 통계 - 비교, 엑셀 저장용</h2>
@@ -102,7 +114,7 @@
 												<span class="add-on input-group-addon">
 													<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
 												</span>
-												<input type="text" style="width: 200px" name="daterange1" id="daterange1" class="form-control" value="10/16/2017 - 10/23/2017" />
+												<input type="text" style="width: 200px" name="daterange1" id="daterange1" class="form-control" value="11/16/2015 - 11/23/2016" />
 											</div>
 											<div id="6" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
 										</div>
@@ -111,7 +123,7 @@
 												<span class="add-on input-group-addon">
 													<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
 												</span>
-												<input type="text" style="width: 200px" name="daterange2" id="daterange2" class="form-control" value="10/16/2017 - 10/23/2017" /><br>
+												<input type="text" style="width: 200px" name="daterange2" id="daterange2" class="form-control" value="11/16/2016 - 11/23/2017" /><br>
 											</div>
 											<div id="7" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
 										</div>

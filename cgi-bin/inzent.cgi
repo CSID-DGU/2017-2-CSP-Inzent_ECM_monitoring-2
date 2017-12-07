@@ -59,6 +59,4 @@ fig = ax.get_figure()
 print 'Content-type:text/html;\r\n\r\n'
 print fig_to_html(fig)
 
-if fn:
-    df[0].to_excel('file/'+fn)
-    os.chmod('file/'+fn, 0660)
+if fn: df[0].to_excel('file/'+fn)

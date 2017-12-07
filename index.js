@@ -1,5 +1,7 @@
+var turn = false;
 var gr_cgi = 'cgi-bin/inzent.cgi';
 var free_cgi = 'cgi-bin/pie.cgi';
+var real_cgi = 'cgi-bin/realtime.cgi';
 function load_cgi(sy_, sm_, sd_, ey_, em_, ed_, file, id) {
 	var jv = {sy : sy_, sm : sm_, sd : sd_, 
 			  ey : ey_, em : em_, ed : ed_, fn : file};
@@ -11,6 +13,24 @@ Date.prototype.addDays = function(days) {
     var dat = new Date(this.valueOf());
     dat.setDate(dat.getDate() + days);
     return dat;
+}
+function inzent_cgi() {
+	var now = new Date();
+	var mi = now.getMinutes();
+	var se = now.getSeconds();
+	$.post(real_cgi, {m : mi, s : se}, function(data, status) {
+		store = data.split('$$separator$$');
+		$('#0').html(store[1]);
+	});
+}
+function update(n) {
+	if(n == 60) {
+		return;
+	}
+	setTimeout(function() {
+		$('#0').html(store[n]);
+		update(n+1);
+	}, 1000);
 }
 $(document).ready( function() {      
 	var today=new Date();
@@ -27,15 +47,7 @@ $(document).ready( function() {
 	load_cgi(ey, em, ed, ey, em, ed, '', '#4');//금일
 	load_cgi(ey-2, em, 0, ey-1, em, 0, '', '#6');//사용자 설정
 	load_cgi(ey-1, em, 0, ey, em, 0, '', '#7');
-	$('#5').load('/tmp/t');// {
-//		$('#5').html(data);
-//	});
-	$('#kindd').change(function () {
-		var jv2 = {kind: $("#kindd").text()};
-		$.post(free_cgi,  function(data, status) {
-			$('#5').html(data);
-		})
-	});
+	$.get(free_cgi, function(data) { });
 	$('#daterange1').daterangepicker(null, function(start, end, label) {
 		console.log(start.toISOString(), end.toISOString(), label);
 		var jv2 = {sy : String(start).split(" ")[3],
@@ -64,5 +76,7 @@ $(document).ready( function() {
 			$('#7').html(data);
 		})
 	});
+	inzent_cgi();
+	update(0);
 });
 
