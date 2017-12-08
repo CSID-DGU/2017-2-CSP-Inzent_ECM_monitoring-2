@@ -18,10 +18,10 @@ colors = ['red', 'deepskyblue']
 explode = [0.1, 0]
 
 plt.pie(vol1, explode = explode,labels = labels, autopct = '%1.1f%%', colors=colors)
-plt.savefig('../file/1.png')
+plt.savefig('../file/f1.png')
 plt.clf()
 plt.pie(vol2, explode = explode,labels = labels, autopct = '%1.1f%%', colors=colors)
-plt.savefig('../file/2.png')
+plt.savefig('../file/f2.png')
 plt.clf()
 plt.pie([sum(x) for x in zip(vol1, vol2)], explode = explode,labels = labels, autopct = '%1.1f%%', colors=colors)
-plt.savefig('../file/3.png')
+plt.savefig('../file/f3.png')

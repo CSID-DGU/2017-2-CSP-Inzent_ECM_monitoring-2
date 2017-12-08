@@ -31,9 +31,9 @@ for i in range(len(vol1), sz): vol1.append(0)
 for i in range(len(vol2), sz): vol2.append(0)
 for i in range(len(total), sz): total.append(0)
 
-print 'Content-type: text/html;\r\n\r\n'
 plt.style.use('fivethirtyeight')
 xlabel = [x - sz for x in range(sz)]
+print 'Content-type: text/html;\r\n\r\n'
 for i in range(sz):
     plt.plot(xlabel, total[i:i+sz])
     plt.plot(xlabel, vol1[i:i+sz])
@@ -43,6 +43,5 @@ for i in range(sz):
     plt.xlabel('time(sec)')
     fig = plt.gcf()
     fig.set_size_inches(12,4)
-    print fig_to_html(fig)
+    plt.savefig('../file/' + str(i) + '.png')
     plt.clf()
-    print '$$separator$$'
