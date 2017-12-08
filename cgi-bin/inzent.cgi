@@ -2,7 +2,6 @@
 # coding: utf-8
 import matplotlib, cgi, cgitb, os
 matplotlib.use('Agg')
-cgitb.enable()
 from pandas import read_sql
 from sqlalchemy import create_engine
 from mpld3 import fig_to_html
