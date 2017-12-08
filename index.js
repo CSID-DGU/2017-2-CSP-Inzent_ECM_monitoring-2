@@ -15,13 +15,9 @@ Date.prototype.addDays = function(days) {
 }
 function update(n) {
 	if(n == 60) { return; }
-	$('#0').css('background-image', "url('file/"+ str(n) + ".png')");
+	$('#0').css('background-image', "url('file/" + n + ".png')");
 	setTimeout(function() { update(n+1); }, 1000);
 }
-function f() {
-	$('#0').css('background-image', "url('file/10.png')");
-}
-
 function inzent_cgi() {
 	var now = new Date();
 	var mi = now.getMinutes();
@@ -74,7 +70,5 @@ $(document).ready( function() {
 	});
 	//inzent_cgi();
 	update(0);
-	f();
-	$('#0').css('background-image', "url('file/10.png')");
 });
 
