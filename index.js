@@ -6,7 +6,7 @@ function load_cgi(sy_, sm_, sd_, ey_, em_, ed_, file, id) {
 			  ey : ey_, em : em_, ed : ed_, fn : file};
 	$.post(gr_cgi, jv, function(data,status) {
 		$(id).html(data);
-	})
+	});
 }
 Date.prototype.addDays = function(days) {
     var dat = new Date(this.valueOf());
@@ -14,15 +14,12 @@ Date.prototype.addDays = function(days) {
     return dat;
 }
 function update(n) {
-	if(n == 60) { return; }
-	$('#0').css('background-image', "url('file/" + n + ".png')");
-	setTimeout(function() { update(n+1); }, 1000);
-}
-function inzent_cgi() {
-	var now = new Date();
-	var mi = now.getMinutes();
-	var se = now.getSeconds();
-	$.post(real_cgi, {m : mi, s : se}, function(data, status) { });
+	$.get(real_cgi, function(data, status){});
+	$('#0').css('background-image', "url('file/" + n + ".png')")
+	.css('background-position', 'left')
+	.animate({'background-position-x':'100%'}, 30000, 'linear', function() {
+		update((n+1)%2);
+	});
 }
 $(document).ready( function() {      
 	var today=new Date();
