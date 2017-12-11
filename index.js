@@ -1,6 +1,6 @@
-var gr_cgi = 'cgi-bin/inzent.cgi';
-var free_cgi = 'cgi-bin/pie.cgi';
-var real_cgi = 'cgi-bin/realtime.cgi';
+var gr_cgi = 'inzent.cgi';
+var free_cgi = 'pie.cgi';
+var real_cgi = 'realtime.cgi';
 function load_cgi(sy_, sm_, sd_, ey_, em_, ed_, file, id) {
 	var jv = {sy : sy_, sm : sm_, sd : sd_, 
 			  ey : ey_, em : em_, ed : ed_, fn : file};
@@ -16,8 +16,8 @@ Date.prototype.addDays = function(days) {
 function update(n) {
 	$.get(real_cgi, function(data, status){});
 	$('#0').css('background-image', "url('file/" + n + ".png')")
-	.css('background-position', 'left')
-	.animate({'background-position-x':'100%'}, 30000, 'linear', function() {
+	.css('background-position', '12%')
+	.animate({'background-position-x':'90%'}, 30000, 'linear', function() {
 		update((n+1)%2);
 	});
 }
