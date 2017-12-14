@@ -16,8 +16,9 @@ sys.setdefaultencoding('utf8')
 
 cgitb.enable()
 
-form=cgi.FieldStorage()
-formm=form.getvalue('kind')
+#form=cgi.FieldStorage()
+#formm=form.getvalue('kind')
+formm="pie"
 
 conn=sql.create_engine('mysql://inzent:1q2w3e4r!@inzent.cyuky5umqyhf.ap-northeast-2.rds.amazonaws.com:3306/inzent?charset=utf8')
 
