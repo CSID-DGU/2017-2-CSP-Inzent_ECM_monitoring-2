@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width", initial-scale="1">
+		<title>ECM monitoring</title>
+		<script src="jquery.min.js"></script>
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" media="all" href="daterangepicker-bs3.css" />
+		<link rel="stylesheet" href="css/custom-style.css">
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="moment.js"></script>
+		<script type="text/javascript" src="daterangepicker.js"></script>
+		<script src='index.js'></script>
+	</head>
+
+	<body>
+		<style type="text/css">
+#j {
+	background-image: url('image/ECM.jpg');
+	background-size: cover;
+	text-shadow: black 0.2em 0.2em 0.2em;
+	color: #2c7bdc;
+}
+		</style>
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">Coding Is Coming</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="jumbotron" id='j'>
+				<h1 class="text-center">ECM monitoring system</h1>
+				<hr />
+				<h3> INZENT </h3>
+				<h5> Coding is coming 5조 </h5>
+				<p class="text-right"><a class="btn btn-primary btn-lg" href="index.html" role="button">초기화</a></p>
+
+			</div>
+		</div>
+
+		<div class='container'><div class='jumbotron' style="background-image:url('back.png');background-size:100% 100%; "><div id='0' style="background-image:url('file/0.png');height:170px;background-size:200% 100%"></div></div></div>
+
+		<div class="container" style="width:100%; height:1060px;">
+			<div class="span12">
+
+				<div class="well well-sm" style="height:1050px;">
+					<div class="row">
+						<div class="col-md-6 row">
+							<h3 style='text-align: center'>지난 12개월간 사용량</h3>
+							<div id="1" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+						</div>
+						<div class="col-md-6 row">
+							<h3 style='text-align: center'>금월 사용량</h3>
+							<div id="2" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+						</div>
+					</div>
+					<br class="row">
+					<div class="row">
+						<div class="col-md-6 row">
+							<h3 style='text-align: center'>지난 30일간 사용량</h3>
+							<div id="3" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+						</div>
+						<div class="col-md-6 row">
+							<h3 style='text-align: center'>금일 사용량</h3>
+							<div id="4" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+						</div>
+					</div>
+					<hr class="row">
+					<h2 class="row text-center">저장소 여유 용량</h2>
+					<hr class="row">
+					<div class="row jumbotron">
+						<select id="kindd">
+							<option value="pie">pie</option>
+							<option value="bar">bar</option>
+						</select>
+						<!--<div class='col-md-4'>
+							<h4 style='text-align: center'>저장소1</h4>
+							<img width=430 src='file/f1.png' align='center'>
+						</div>
+						<div class='col-md-4'>
+							<h4 style='text-align: center'>저장소2</h4>
+							<img width=430 align='center' src='file/f2.png'>
+						</div>
+						<div class='col-md-4'>
+							<h4 style='text-align: center'>총합</h4>
+							<img width=430 src='file/f3.png' align='center'>
+						</div>-->
+					</div>
+
+					<hr class="row">
+					<h2 class="row text-center">사용자 기간 설정 사용량 통계 - 비교, 엑셀 저장용</h2>
+					<hr class="row">
+					<div class="well well-sm row" style="width:100%; ">
+
+						<form class="form-horizontal">
+							<fieldset>
+								<div class="control-group">
+									<div class="controls">
+										<div class="col-md-6">
+											<div class="input-prepend input-group" style='height:37px; border:3px solid gold; float:left; text-align: center'>
+												<span class="add-on input-group-addon">
+													<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+												</span>
+												<input type="text" style="width: 200px" name="daterange1" id="daterange1" class="form-control" value="11/16/2015 - 11/23/2016" />
+											</div>
+											<div id="6" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+										</div>
+										<div class="col-md-6">
+											<div class="input-prepend input-group" style='height:37px; border:3px solid gold; text-align: center'>
+												<span class="add-on input-group-addon">
+													<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+												</span>
+												<input type="text" style="width: 200px" name="daterange2" id="daterange2" class="form-control" value="11/16/2016 - 11/23/2017" /><br>
+											</div>
+											<div id="7" style='height:500px; border:3px solid gold; float:left; text-align: center'></div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+
+					<footer class="row" style="background-color: #000000; color: #ffffff">
+						<br>
+						<div class="col-sm-7" style="text-align: left;"><h5>동국대 ICIP 2017</h5><h5>INZENT & CIC</h5></div>
+						<div class="col-sm-2"><h4>INZENT</h4><p>한상훈</p></div>
+						<div class="col-sm-3"><h4>CIC</h4><p>강백진, 이희선, 정석현, 박승원</p></div>
+					</footer>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
